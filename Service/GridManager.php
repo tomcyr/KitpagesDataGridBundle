@@ -52,8 +52,13 @@ class GridManager
         $gridQueryBuilder = clone($queryBuilder);
 
         // Apply filters
-        $filter = $request->query->get($grid->getFilterFormName(),"");
-        $this->applyFilter($gridQueryBuilder, $grid, $filter);
+        if ($request->isMethod("POST")) {
+            $filters = $request->request->all();
+            $this->applyFilters($gridQueryBuilder, $grid, $filters);
+        } else {
+            $filter = $request->query->get($grid->getFilterFormName(),"");
+            $this->applyFilter($gridQueryBuilder, $grid, $filter);    
+        }
 
         // Apply selector
         $selectorField = $request->query->get($grid->getSelectorFieldFormName(),"");
@@ -308,6 +313,40 @@ class GridManager
         }
 
         return $paginator;
+    }
+
+    protected function applyFilters(QueryBuilder $queryBuilder, Grid $grid, array $filters = array())
+    {
+        if (empty($filters)) {
+            return;
+        }
+        $event = new DataGridEvent();
+        $event->set("grid", $grid);
+        $event->set("gridQueryBuilder", $queryBuilder);
+        $event->set("filters", $filters);
+        $this->dispatcher->dispatch(KitpagesDataGridEvents::ON_APPLY_FILTER, $event);
+
+        if (!$event->isDefaultPrevented()) {
+            $filterRequestList = array();
+            foreach ($filters as $field => $filter) {
+                if (!empty($filter)) {
+                    $f = str_replace('_', '.', $field);
+                    $filterRequestList[] = $queryBuilder->expr()->like($f, ':'.$field);
+                }
+            }
+
+            if (count($filterRequestList) > 0) {
+                $reflectionMethod = new \ReflectionMethod($queryBuilder->expr(), "andx");
+                $queryBuilder->andWhere($reflectionMethod->invokeArgs($queryBuilder->expr(), $filterRequestList));
+                foreach ($filters as $field => $filter) {
+                    if (!empty($filter)) {
+                        $queryBuilder->setParameter($field, "%".$filter."%");
+                    }
+                }
+            }
+            $grid->setFilterValues($filters);
+        }        
+        $this->dispatcher->dispatch(KitpagesDataGridEvents::AFTER_APPLY_FILTER, $event);
     }
 
 }

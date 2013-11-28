@@ -38,6 +38,8 @@ class Grid
     protected $selectorField = null;
     /** @var string */
     protected $selectorValue = null;
+    /** @var array */
+    protected $filterValues = array();
 
     public function __construct()
     {
@@ -425,6 +427,23 @@ class Grid
     public function getDispatcher()
     {
         return $this->dispatcher;
+    }
+
+
+    /**
+     * @return array [description]
+     */
+    public function getFilterValues() {
+        return $this->filterValues;
+    }
+    
+    /**
+     * @param array $newfilterValues
+     */
+    public function setFilterValues(array $filterValues) {
+        $this->filterValues = $filterValues;
+    
+        return $this;
     }
 
 }
