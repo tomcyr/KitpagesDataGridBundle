@@ -45,7 +45,9 @@
                         {% endif %}
                     </td>
                 {% endfor %}
-                {#<td><button type="submit" class="btn" value="{{ "Apply" | trans }}">{{ "Apply" | trans }}</button></td>#}
+                {# 
+                    <td><button type="submit" class="btn" value="{{ "Apply" | trans }}">{{ "Apply" | trans }}</button></td> 
+                #}
             </tr>
         {% endblock %}
         </thead>
@@ -86,6 +88,8 @@
 </div>
 
 {% block kit_grid_javascript %}
-    <script type="text/javascript" src="{{ asset('bundles/kitpagesdatagrid/js/datagrid.js') }}" />
+    {# 
+        <script type="text/javascript" src="{{ asset('bundles/kitpagesdatagrid/js/datagrid.js') }}" /> 
+    #}
 {% endblock kit_grid_javascript %}
 {% endblock kit_grid_main %}

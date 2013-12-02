@@ -19,14 +19,14 @@
             //this will reload the page, it's likely better to store this until finished
             document.location.search = kvp.join('&');
         }
-        $('#{{grid.filterFormName}}_form').submit(function(e) {
-            e.preventDefault();
-            value = $('#{{grid.filterFormName}}').val();
-            insertParamInQueryString('{{grid.filterFormName}}',value);
-        });
-        $('#{{grid.filterFormName}}_reset_button').click(function(e) {
-            e.preventDefault();
-            insertParamInQueryString('{{grid.filterFormName}}',"");
-        });
+        // $('#{{grid.filterFormName}}_form').submit(function(e) {
+        //     e.preventDefault();
+        //     value = $('#{{grid.filterFormName}}').val();
+        //     insertParamInQueryString('{{grid.filterFormName}}',value);
+        // });
+        // $('#{{grid.filterFormName}}_reset_button').click(function(e) {
+        //     e.preventDefault();
+        //     insertParamInQueryString('{{grid.filterFormName}}',"");
+        // });
 
 })();
