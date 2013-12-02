@@ -41,7 +41,7 @@
                 {% for field in grid.gridConfig.fieldList %}
                     <td>
                         {% if field.filterable %}
-                            <input class="input-medium search-query" type="text" name="{{field.fieldName}}" placeholder="{{ "Filter" | trans }}" id="{{field.fieldName}}" value="{{ grid.filterValues[field.fieldName|replace({'.': '_'})]|default('') }}"/>
+                            <input class="form-control search-query" type="text" name="{{field.fieldName}}" placeholder="{{ "Filter" | trans }}" id="{{field.fieldName}}" value="{{ grid.filterValues[field.fieldName|replace({'.': '_'})]|default('') }}"/>
                         {% endif %}
                     </td>
                 {% endfor %}
