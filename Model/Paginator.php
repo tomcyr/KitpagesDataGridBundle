@@ -157,4 +157,30 @@ class Paginator
         return $this->requestUri;
     }
 
+    /**
+     * @return int
+     */
+    public function getCurrentItemFrom()
+    {
+        if ($this->currentPage === 1)
+        {
+            return 1;
+        } else {
+            return $this->getPaginatorConfig()->getItemCountInPage() * $this->getPreviousButtonPage() + 1;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentItemTo()
+    {
+        if (null === $this->getNextButtonPage())
+        {
+            return $this->getTotalItemCount();
+        } else {
+            return $this->getPaginatorConfig()->getItemCountInPage() * $this->getCurrentPage();
+        }
+    }
+
 }
