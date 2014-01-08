@@ -69,7 +69,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="{{ grid.gridConfig.fieldList | length }}" class="kit-grid-no-data">{{ "No data found" | trans }}</td>
+                <td colspan="{{ grid.gridConfig.fieldList | length + 1 }}" class="kit-grid-no-data">{{ "No data found" | trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
